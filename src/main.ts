@@ -80,7 +80,7 @@ const game = createGame({
           }
 				}
 
-        if (isDefaultTarget) {
+        if (isDefaultTarget && !nextCell.solid) {
 					game.addToCell(tx, ty, 't');
         }
       },
