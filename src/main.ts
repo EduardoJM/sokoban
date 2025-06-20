@@ -5,9 +5,26 @@ import { fixedCrateSprite } from './sprites/fixed-crate'
 import { crateSprite } from './sprites/crate'
 import { wallSprite } from './sprites/wall'
 import { targetSprite } from './sprites/target'
+import { getMap } from './maps/map';
 import { levels } from './maps/levels';
 
-const defaultTargets: Array<{ x: number, y: number }> = [];
+let defaultTargets: Array<{ x: number, y: number }> = [];
+let levelIndex = 0;
+
+type Position = [number, number];
+type Game = {
+  loadMap: (map: string, playerPosition?: Position) => void;
+  openDialog: (text: string) => Promise<void>;
+}
+
+const goToNextLevel = async (game: Game) => {
+  await game.openDialog('Nice job! Going to next level.');
+
+  levelIndex = (levelIndex + 1) % levels.length
+  const map = levels[levelIndex];
+  defaultTargets = [];
+  game.loadMap(getMap(map), map.startPosition);
+}
 
 const game = createGame({
   cellWidth: 32,
@@ -16,10 +33,6 @@ const game = createGame({
 	screenHeight: 10,
   background: '#e0d8ad',
   colors,
-  player: {
-    sprite: playerSprite,
-    position: levels[1].startPosition,
-  },
 	templates: {
     x: {
       sprite: 2,
@@ -62,7 +75,7 @@ const game = createGame({
               }
             }
             if (!hasTarget) {
-              await game.openDialog('Nice job! Go to next level.');
+              await goToNextLevel(game);
             }
           }
 				}
@@ -73,5 +86,9 @@ const game = createGame({
       },
     },
   },
-  map: levels[1].sprite
+  map: getMap(levels[levelIndex]),
+  player: {
+    sprite: playerSprite,
+    position: levels[levelIndex].startPosition,
+  },
 })
