@@ -40,6 +40,8 @@ const wallLight = '#c9c6c7';
 const wallColor = '#888a87';
 const wallDark = '#54534f';
 
+const targetColor = '#d89c82';
+
 const sokobanColors = [
   skinColor1, // a
   skinColor2, // b
@@ -66,6 +68,7 @@ const sokobanColors = [
   wallLight, // w
   wallColor, // x
   wallDark, // y
+  targetColor, // z
 ];
 
 export const colors = [

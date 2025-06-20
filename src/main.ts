@@ -4,6 +4,8 @@ import { playerSprite } from './sprites/player'
 import { fixedCrateSprite } from './sprites/fixed-crate'
 import { crateSprite } from './sprites/crate'
 import { wallSprite } from './sprites/wall'
+import { targetSprite } from './sprites/target'
+import { levels } from './maps/levels';
 
 const defaultTargets: Array<{ x: number, y: number }> = [];
 
@@ -16,14 +18,14 @@ const game = createGame({
   colors,
   player: {
     sprite: playerSprite,
-    position: [5, 4],
+    position: levels[1].startPosition,
   },
 	templates: {
     x: {
       sprite: 2,
     },
     t: {
-      sprite: 5,
+      sprite: targetSprite,
       solid: false,
     },
     f: { sprite: fixedCrateSprite },
@@ -71,16 +73,5 @@ const game = createGame({
       },
     },
   },
-  map: `
-	..........
-	...wwwww..
-	.www...w..
-	.wf....w..
-	.www..fw..
-	.wtwwc.ww.
-	.w.wft.fw.
-	.wc.....w.
-  .w....f.w.
-  .wwwwwwww.
-	`
+  map: levels[1].sprite
 })
