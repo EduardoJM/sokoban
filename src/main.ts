@@ -16,7 +16,7 @@ const game = createGame({
   colors,
   player: {
     sprite: playerSprite,
-    position: [1, 1],
+    position: [5, 4],
   },
 	templates: {
     x: {
@@ -30,7 +30,7 @@ const game = createGame({
     w: { sprite: wallSprite },
     c: {
       sprite: crateSprite,
-      onCollide(target) {
+      onCollide: async function (target) {
         const [px, py] = game.player.position
 				const [tx, ty] = target.position
 
@@ -39,7 +39,8 @@ const game = createGame({
 				const [dx, dy] = [tx - px, ty - py]
 				const nextCell = game.getCell(tx + dx, ty + dy)
 				if (!nextCell.solid) {
-          if (nextCell.symbol === 't') {
+          const isCorrectOnTarget = nextCell.symbol === 't';
+          if (isCorrectOnTarget) {
             defaultTargets.push({ x: tx + dx, y: ty + dy });
             game.playSound('POWERUP', 543534);
           }
@@ -47,6 +48,21 @@ const game = createGame({
 					game.addToCell(tx + dx, ty + dy, target.symbol)
 					game.player.position = [tx, ty]
 					target.remove()
+
+          if (isCorrectOnTarget) {
+            let hasTarget = false;
+            for (let y = 0; y < game.height; y++) {
+              for (let x = 0; x < game.width; x++) {
+                const cell = game.getCell(x, y);
+                if (cell.symbol === 't') {
+                  hasTarget = true;
+                }
+              }
+            }
+            if (!hasTarget) {
+              await game.openDialog('Nice job! Go to next level.');
+            }
+          }
 				}
 
         if (isDefaultTarget) {
@@ -56,13 +72,15 @@ const game = createGame({
     },
   },
   map: `
-	xxxxxxxx
-	w....f.x
-	w..c...x
-	w......x
-	w..t...x
-	w......x
-	www....x
-	xxxxxxxx
+	..........
+	...wwwww..
+	.www...w..
+	.wf....w..
+	.www..fw..
+	.wtwwc.ww.
+	.w.wft.fw.
+	.wc.....w.
+  .w....f.w.
+  .wwwwwwww.
 	`
 })
