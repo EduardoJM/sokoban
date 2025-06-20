@@ -91,4 +91,5 @@ const game = createGame({
     sprite: playerSprite,
     position: levels[levelIndex].startPosition,
   },
+  title: 'Sokoban'
 })
