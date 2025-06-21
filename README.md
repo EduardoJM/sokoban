@@ -12,3 +12,6 @@ A small proof of concept writing a game using [Odyc.js](https://odyc.dev/).
 - [ ] Feature: More levels.
 - [ ] Feature: Create a way to identify when user is blocked.
 - [ ] Refactor: Create a better color palette and pixel art's.
+- [ ] Web: create a better favicon.
+- [ ] Web: add social share meta-tags.
+- [ ] Docs: write a best Readme for this game.
