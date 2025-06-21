@@ -91,5 +91,5 @@ const game = createGame({
     sprite: playerSprite,
     position: levels[levelIndex].startPosition,
   },
-  title: 'Sokoban'
+  title: '* Sokoban *\r\n\r\n\r\n\r\n\r\nPress [space] or [enter]'
 })
