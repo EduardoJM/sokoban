@@ -1,4 +1,5 @@
 import { createGame } from 'odyc'
+import type { Game } from './types';
 import { colors } from './config/colors'
 import { playerSprite } from './sprites/player'
 import { fixedCrateSprite } from './sprites/fixed-crate'
@@ -10,12 +11,6 @@ import { levels } from './maps/levels';
 
 let defaultTargets: Array<{ x: number, y: number }> = [];
 let levelIndex = 0;
-
-type Position = [number, number];
-type Game = {
-  loadMap: (map: string, playerPosition?: Position) => void;
-  openDialog: (text: string) => Promise<void>;
-}
 
 const goToNextLevel = async (game: Game) => {
   await game.openDialog('Nice job! Going to next level.');
@@ -53,7 +48,8 @@ const game = createGame({
 
 				const [dx, dy] = [tx - px, ty - py]
 				const nextCell = game.getCell(tx + dx, ty + dy)
-				if (!nextCell.solid) {
+        const isSolid = nextCell.solid;
+				if (!isSolid) {
           const isCorrectOnTarget = nextCell.symbol === 't';
           if (isCorrectOnTarget) {
             defaultTargets.push({ x: tx + dx, y: ty + dy });
@@ -80,7 +76,7 @@ const game = createGame({
           }
 				}
 
-        if (isDefaultTarget && !nextCell.solid) {
+        if (isDefaultTarget && !isSolid) {
 					game.addToCell(tx, ty, 't');
         }
       },
