@@ -6,12 +6,11 @@ A small proof of concept writing a game using [Odyc.js](https://odyc.dev/).
 
 ## Roadmap
 
-- [ ] Bug: When user move a box from target, we need to recreate target.
-- [ ] Feature: Menu logic to choice levels.
-- [ ] Feature: Menu logic to restart game level.
+- [x] Web: create a better favicon.
+- [x] Web: add social share meta-tags.
+- [x] Bug: When user move a box from target, we need to recreate target.
+- [X] Feature: Menu logic to choice levels.
+- [X] Feature: Menu logic to restart game level.
 - [ ] Feature: More levels.
-- [ ] Feature: Create a way to identify when user is blocked.
 - [ ] Refactor: Create a better color palette and pixel art's.
-- [ ] Web: create a better favicon.
-- [ ] Web: add social share meta-tags.
 - [ ] Docs: write a best Readme for this game.
