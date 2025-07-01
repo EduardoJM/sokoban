@@ -70,11 +70,15 @@ const game = createGame({
 
           if (isCorrectOnTarget) {
             let hasTarget = false;
-            for (let y = 0; y < game.height; y++) {
-              for (let x = 0; x < game.width; x++) {
-                const cell = game.getCell(x, y);
-                if (cell.symbol === 't') {
-                  hasTarget = true;
+            if (isDefaultTarget && !isSolid) {
+              hasTarget = true;
+            } else {
+              for (let y = 0; y < game.height; y++) {
+                for (let x = 0; x < game.width; x++) {
+                  const cell = game.getCell(x, y);
+                  if (cell.symbol === 't') {
+                    hasTarget = true;
+                  }
                 }
               }
             }
