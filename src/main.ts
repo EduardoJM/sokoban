@@ -12,13 +12,21 @@ import { levels } from './maps/levels';
 let defaultTargets: Array<{ x: number, y: number }> = [];
 let levelIndex = 0;
 
+const goToLevel = (game: Game, index: number) => {
+  if (levelIndex !== index) {
+    levelIndex = index
+  }
+
+  const map = levels[index];
+  defaultTargets = [];
+  game.loadMap(getMap(map), map.startPosition);
+}
+
 const goToNextLevel = async (game: Game) => {
   await game.openDialog('Nice job! Going to next level.');
 
   levelIndex = (levelIndex + 1) % levels.length
-  const map = levels[levelIndex];
-  defaultTargets = [];
-  game.loadMap(getMap(map), map.startPosition);
+  goToLevel(game, levelIndex);
 }
 
 const game = createGame({
@@ -88,4 +96,20 @@ const game = createGame({
     position: levels[levelIndex].startPosition,
   },
   title: '* Sokoban *\r\n\r\n\r\n\r\n\r\nPress [space] or [enter]'
+})
+
+const LevelsMenu = levels.map((_, index) => ({
+  [`Level ${index + 1}`]: () => goToLevel(game, index),
+})).reduce((prev, next) => ({ ...prev, ...next }));
+
+const MainMenu = {
+  Continue: null,
+  'Change Level': LevelsMenu,
+  'Restart': () => goToLevel(game, levelIndex),
+}
+
+document.addEventListener('keyup', (e) => {
+  if (e.key === 'Escape') {
+    game.openMenu(MainMenu);
+  }
 })
